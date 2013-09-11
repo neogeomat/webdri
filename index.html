@@ -43,7 +43,7 @@
 		var ranger = 0.015;//10000000//.5;//10000;
 		var map_bound = [centerX-ranger,centerY-ranger,centerX+ranger,centerY+ranger];
 		var extent = new OpenLayers.Bounds(map_bound[0],map_bound[1],map_bound[2],map_bound[3]);
-		var zoom = 17;
+		var zoom = 18;
 		var zoom_data_limit = 18; // vector data will load only in this level or above
 		
 		//other options
@@ -512,7 +512,7 @@
 		
 		building = new OpenLayers.Layer.Vector("Building", {
 			strategies: [
-				new ZoomLimitedBBOXStrategy(16),
+				new ZoomLimitedBBOXStrategy(zoom_data_limit),
 				// new OpenLayers.Strategy.BBOX({ratio:1.0}),
 				new OpenLayers.Strategy.Refresh()
 			],
@@ -526,7 +526,7 @@
 		
 		facility = new OpenLayers.Layer.Vector("Facility", {
 			strategies: [
-				new ZoomLimitedBBOXStrategy(16),
+				new ZoomLimitedBBOXStrategy(zoom_data_limit),
 				// new OpenLayers.Strategy.BBOX({ratio:1.0}),
 				new OpenLayers.Strategy.Refresh()
 			],

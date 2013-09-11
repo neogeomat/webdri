@@ -1,6 +1,6 @@
 function setStatusText(text)
   {
-var html_node = document.getElementById("statusline");
+var html_node = document.getElementById("instructionline");
 if (!html_node){
   html_node = document.createElement("div");
   html_node.id = "statusline";
