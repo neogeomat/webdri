@@ -538,71 +538,24 @@
 		});
 
 		map.addLayer(facility);
+		map.addLayer(building);
 		
-		/*map.events.on({
-			"zoomend":function(e){
-				removepopup();
-				if(this.getZoom()>=zoom_data_limit){        //sufficiently zoomed in now load vertor data
-					document.getElementById('instructionline').innerHTML = "Loading";
-					if(!map.getLayersByName("Building")[0]){
-						if(map.baseLayer.name=="OSM"){
-							//if(confirm("Do you want to change to Bing Satellite Image?")){
-								//map.setBaseLayer(bing);
-							//}
-						}
-						map.addLayer(building);
-					}
-					document.getElementById('instructionline').innerHTML = "Click on the Building";
-				}
-				else{
-					if(map.getLayersByName("Building")[0]){
-						if(map.baseLayer.name=="Bing Aerial Layer"){
-							//if(confirm("Do you want to change to OSM Layer?")){
-								//map.setBaseLayer(osm);
-							//}
-						}
-						map.removeLayer(building);						
-						document.getElementById('instructionline').innerHTML = "Please Zoom In";
-					}
-				}
-			}
-		});	
-		*/
-		//this part shows the bounding boxes of the map
-		/*var boxes = new OpenLayers.Layer.Vector("Extent",{
-			projection: new OpenLayers.Projection("EPSG:900913")
-		});
-		
-		boxes.addFeatures([new OpenLayers.Feature.Vector(
-			extent.transform(proj4326,proj900913).toGeometry()
-		)]);
-		map.addLayers([boxes]);
-		//map.zoomToExtent(extent);
-		*/
 		//controls		
 		selector1 = new OpenLayers.Control.ModifyFeature(building,{
 			onSelect: onFeatureSelect,
-			onUnselect: onFeatureUnselect
-		});
-		map.addControl(selector1);
-		highlightor =new OpenLayers.Control.SelectFeature(building,{
-			hover:true,
-			highlightOnly:true,
-			autoActivate:true
-					
-			
-		}); 
-		map.addControl(highlightor);
-		selector2 = new OpenLayers.Control.ModifyFeature(facility,{
-			onSelect: onFacilitySelect,
-			onUnselect: onFacilityUnselect,
-			// virtualStyle: new OpenLayers.Style({
-			// 	pointRadius: "14px"
-			// })
+			onUnselect: onFeatureUnselect,
 			virtualStyle: {
 				pointRadius: "14px"
 			}
-			//hover:true
+		});
+		map.addControl(selector1);
+
+		selector2 = new OpenLayers.Control.ModifyFeature(facility,{
+			onSelect: onFacilitySelect,
+			onUnselect: onFacilityUnselect,
+			virtualStyle: {
+				pointRadius: "14px"
+			}
 		});
 		map.addControl(selector2);
 		selector2.activate();
