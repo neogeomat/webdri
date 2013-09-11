@@ -3,158 +3,14 @@
   <head>
     <title>WebDRI</title>
 	<link rel="stylesheet" href="http://www.openlayers.org/api/2.12/theme/default/style.css" type="text/css">
-    <!-- // <script src="http://localhost/openlayers-2.12/lib/OpenLayers.js"></script> -->
+    <script src="http://www.openlayers.org/api/2.12/OpenLayers.js"></script>
     <script src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2&amp;mkt=en-us"></script> <!--This is required wrapper for the bing images-->
     <script src="js/OSMMeta.js"></script>
     <script type="text/javascript" src="js/zoomlimitedbbox.js"></script>
     <script src="sessvars.js"></script>
     <script src="js/geocoder.js"></script>
     <script src="http://trac.osgeo.org/openlayers/export/12468/addins/loadingPanel/trunk/lib/OpenLayers/Control/LoadingPanel.js"></script>
-    <style type="text/css">
-        .olControlLoadingPanel {
-            background-image:url(http://dev.openlayers.org/addins/loadingPanel/trunk/theme/default/img/loading.gif);
-            margin-left: 30%;
-            margin-top: 10%;
-            position: absolute;
-            width: 195px;
-            height: 11px;
-            background-position:center;
-            background-repeat:no-repeat;
-            display: none;
-            z-index:15000;
-        }
-    </style>
-    <style>
-		html, body, #map {margin: 0; width: *; height: 95%; }
-		//.tbl{font-size : 90%;  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;  background : #efe none; color : #630; }
-		//td{font-size : 90%;  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;  background : #efe none; color : #630; width:200px }
-		//td.small{font-size : 90%;  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;  background : #efe none; color : #630; width:100px }
-		//.selbox, .txtbox{font-size : 80%;  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;  background : #efe none; color : #630; width:200px }
-		//.txtboxSmall{font-size : 80%;  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;  background : #efe none; color : #630; width:75px }
-		
-		//
-		{font-
-		:inherit;}
-		
-		.tbl{font-size : 90%;  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;  background : #efe none; color : #630; }
-		td{font-size : 90%;  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;  background : #efe none; color : #630; width:130px }
-		td.small{font-size : 90%;  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;  background : #efe none; color : #630; width:130px }
-		.selbox, .txtbox{font-size : 80%;  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;  background : #efe none; color : #630; width:130px }
-		.txtboxSmall{font-size : 80%;  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;  background : #efe none; color : #630; width:75px }
-		
-		@media all and (min-width: 1001px) 
-		{
-			body{background-color:red}
-			#title{position:fixed;margin-top:5px}
-			#btnLocateMe{position:fixed;margin-top:5px;right:5px;}
-			#btnsearch{position:fixed;margin-top:5px;right:90px;}
-			
-			#search{position:fixed;margin-top:5px;right:160px;}
-			#map{position:fixed;top:30px;left:2px;right:2px;}
-			#instructionline
-			{
-				border:2px;border-style:solid;border-radius:25px;
-				text-align:center;
-				position:relative;top:60px;margin-left:auto;margin-right:auto;
-				mfont-size:12pt;font-family:sans-serif;
-				background-color:#b0e0e6;width:40%;
-				height:25px;
-			}
-			#relocater, #noSuchPlaceFound, #updated
-			{
-				vertical-align:middle;
-				border:2px;border-style:solid;border-radius:25px;
-				text-align:center;
-				position:relative;top:30px;margin-left:auto;margin-right:auto;
-				background-color:#b0e0e6;width:40%;
-				mfont-size:12pt;font-family:sans-serif;height:25px;
-			}
-	
-		}
-		@media all and (min-width: 750px) and (max-width:1000px)
-		{
-			//html{zoom:020%}
-			body{background-color:yellow;font-size:1.2em;}
-			//input{font-size:1.2em}
-			#title{position:fixed;margin-top:5px}
-			#btnLocateMe{position:fixed;margin-top:5px;right:2px;}
-			#btnsearch{position:fixed;margin-top:5px;right:90px;}
-			
-			#search{position:fixed;margin-top:5px;right:160px;width:150px}
-			#map{position:fixed;top:30px;left:2px;right:2px;}
-			#instructionline
-			{
-				border:2px;border-style:solid;border-radius:25px;
-				text-align:center;
-				position:relative;top:60px;margin-left:auto;margin-right:auto;
-				mfont-size:16pt;font-family:sans-serif;
-				background-color:#b0e0e6;width:40%;
-				height:25px;
-			}
-			#relocater, #noSuchPlaceFound, #updated
-			{
-				vertical-align:middle;
-				border:2px;border-style:solid;border-radius:25px;
-				text-align:center;
-				position:relative;top:30px;margin-left:auto;margin-right:auto;
-				background-color:#b0e0e6;width:40%;
-				mfont-size:12pt;font-family:sans-serif;height:25px;
-				
-			}
-
-		}
-		@media all and (min-width: 400px) and (max-width:749px)
-		{
-			html{zoom:200%}
-			body{background-color:cyan;font-size:1.2em;}
-			//input{font-size:1.2em}
-			#title{position:fixed;margin-top:5px}
-			#btnLocateMe{position:fixed;margin-top:5px;right:2px;}
-			#btnsearch{position:fixed;margin-top:5px;right:90px;}
-			
-			#search{position:fixed;margin-top:5px;right:160px;width:150px}
-			#map{position:fixed;top:30px;left:2px;right:2px;}
-			#instructionline
-			{
-				border:2px;border-style:solid;border-radius:25px;
-				text-align:center;
-				position:relative;top:60px;margin-left:auto;margin-right:auto;
-				mfont-size:16pt;font-family:sans-serif;
-				background-color:#b0e0e6;width:40%;
-				height:25px;
-			}
-			#relocater, #noSuchPlaceFound, #updated
-			{
-				vertical-align:middle;
-				border:2px;border-style:solid;border-radius:25px;
-				text-align:center;
-				position:relative;top:30px;margin-left:auto;margin-right:auto;
-				background-color:#b0e0e6;width:40%;
-				mfont-size:12pt;font-family:sans-serif;height:25px;
-				
-			}
-
-		}
-		@media all and (max-width:399px) 
-		{
-			body{background-color:blue;font-size:20px}
-			#title{position:fixed;margin-top:5px}
-			#btnLocateMe{position:fixed;margin-top:5px;right:5px;}
-			#btnsearch{position:fixed;margin-top:5px;right:90px;}
-			
-			#search{position:fixed;margin-top:5px;right:160px;}
-			#map{position:fixed;top:30px;left:2px;right:2px;}
-			#instructionline{text-align:center;position:relative;top:60px;margin-left:auto;margin-right:auto;mfont-size:12pt;font-family:sans-serif;background-color:#b0e0e6;width:40%}
-			#relocater, #noSuchPlaceFound, #updated
-			{
-				text-align:center;position:relative;top:40px;margin-left:auto;margin-right:auto;background-color:#b0e0e6;width:40%;
-				
-			}
-
-		}
-		
-		
-	</style>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <script type="text/javascript">
 		//OpenLayers.ProxyHost= "/cgi-bin/proxy.cgi?url=";	
 		//global variables
@@ -723,7 +579,7 @@
 		//map.zoomToExtent(extent);
 		*/
 		//controls		
-		selector1 = new OpenLayers.Control.SelectFeature(building,{
+		selector1 = new OpenLayers.Control.ModifyFeature(building,{
 			onSelect: onFeatureSelect,
 			onUnselect: onFeatureUnselect
 		});
@@ -736,7 +592,7 @@
 			
 		}); 
 		map.addControl(highlightor);
-		selector2 = new OpenLayers.Control.SelectFeature(facility,{
+		selector2 = new OpenLayers.Control.ModifyFeature(facility,{
 			onSelect: onFacilitySelect,
 			onUnselect: onFacilityUnselect
 			//hover:true
