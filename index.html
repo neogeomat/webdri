@@ -494,6 +494,7 @@
 		map.addLayer(osm);
 		map.addLayer(bing);
 		map.addLayer(markers);
+		map.setBaseLayer(bing);
 		map.setCenter(center.transform(proj4326,proj900913),zoom);
 		
 		//OSM data layer
@@ -594,7 +595,13 @@
 		map.addControl(highlightor);
 		selector2 = new OpenLayers.Control.ModifyFeature(facility,{
 			onSelect: onFacilitySelect,
-			onUnselect: onFacilityUnselect
+			onUnselect: onFacilityUnselect,
+			// virtualStyle: new OpenLayers.Style({
+			// 	pointRadius: "14px"
+			// })
+			virtualStyle: {
+				pointRadius: "14px"
+			}
 			//hover:true
 		});
 		map.addControl(selector2);
