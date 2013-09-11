@@ -2,15 +2,15 @@
 <html>
   <head>
     <title>WebDRI</title>
-	<link rel="stylesheet" href="http://www.openlayers.org/api/2.11/theme/default/style.css" type="text/css">
-	<script src="http://openlayers.org/api/2.12/OpenLayers.js" type="text/javascript"></script>
-    <!--script src="../../openlayers-2.12/lib/OpenLayers.js"></script-->
+	<link rel="stylesheet" href="http://www.openlayers.org/api/2.12/theme/default/style.css" type="text/css">
+	<!-- // <script src="http://openlayers.org/api/2.12/OpenLayers.js" type="text/javascript"></script> -->
+    <script src="http://localhost/openlayers-2.12/lib/OpenLayers.js"></script>
     <script src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2&amp;mkt=en-us"></script> <!--This is required wrapper for the bing images-->
     <!--script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script-->
     <script src="js/OSMMeta.js"></script>
+    <script type="text/javascript" src="js/zoomlimitedbbox.js"></script>
     <script src="sessvars.js"></script>
-    
-    <script src="geocoder.js"></script>
+    <script src="js/geocoder.js"></script>
     <script src="http://trac.osgeo.org/openlayers/export/12468/addins/loadingPanel/trunk/lib/OpenLayers/Control/LoadingPanel.js"></script>
     <style type="text/css">
         .olControlLoadingPanel {
@@ -200,42 +200,7 @@
 	
 	function submit(){
 		//alert(document.getElementById('name'));
-	}
-	
-	/////////////////////*********Engaging***************///////////////////////
-		/*var field = [
-					{key:"building",alias:"Building",value:["N/A","commercial","residential","public_admin","health_facility","academic"]},
-					{key:"building:typology",alias:"Building Typology",value:["N/A","Reinforced_Concrete_Frame","Mud_Packed"]},
-					{key:"building:level",alias:"Storeys",value:["N/A","1","2","3","4","5"]},
-					{key:"building:use",alias:"Use of Building",value:["N/A","Commercial","Residential","Public_Admin","Health_Facility","Academic"]},
-					{key:"building:floor_type",alias:"Floor Type",value:["N/A","Concrete","Wood"]},
-					{key:"building:roof_type",alias:"Roof Type",value:["N/A","Flat","Sloped"]},
-					{key:"building:test",alias:"Test",value:["N/A","test1","test2"]}
-					];*/
-		
-		/*var field = [
-					{key:"building",alias:"Building",value:["N/A","kindergarten","school","college","university","hospital","clinic","nursing_home","health_post"]},
-					
-					{key:"building:age",alias:"Estimated Building Age",value:["N/A","After_2000","1990-2000","1960-1990","Before_1960"]},
-					{key:"building:retrofit",alias:"Retrofitted",value:["N/A","Yes","No"]},
-					{key:"building:owner",alias:"Owner",value:["N/A","Self","Rent"]},
-					
-					{key:"building:roof_slope",alias:"Roof Slope",value:["N/A","Flat","Sloped","Mixed"]},
-					{key:"building:neighbour",alias:"Adjoining Buildings",value:["N/A","One_Side_Same_Height","One_Side_Different_Height","Two_Sides_Same_Height","Two_Sides_Different_Height","Three_Sides_Same_Height","Three_Sides_Different_Height","Free_Standing"]},
-					{key:"building:shape:plan",alias:"Building Shape in Plan",value:["N/A","Rectangular","T-Shaped","L-Shaped","U-Shaped","Multi-Projected","Triangular"]},
-					{key:"building:shape:elevation",alias:"Building Shape in Elevation",value:["N/A","Regular","Setback","Tall"]},
-					{key:"building:condition",alias:"Visible Physical Condition",value:["N/A","Poor","Average","Good"]},
-					{key:"building:soft_storey",alias:"Soft Storeys",value:["N/A","Yes","No"]},
-					{key:"building:overhang",alias:"Overhangs",value:["N/A","Yes","No"]},
-					
-					{key:"building:level",alias:"Storeys",value:["N/A","1","2","3","4","5","6","7","8","9","&gt10"]},
-					{key:"building:floor_material",alias:"Floor Material",value:["N/A","Wood","Bamboo","RCC/RBC","Jack_Arch","Others"]},
-					{key:"building:roof_material",alias:"Roof Material",value:["N/A","Jhingati","Clay_Tiles","CGI","RCC/RBC","Others"]},
-										
-					{key:"building:structure",alias:"Structural System",value:["N/A","Non_Engineered_RC_Frame","Engineered_RC_Frame","Load_Bearing_Brick_Wall_in_Cement_Mortar","Load_Bearing_Brick_Wall_in_Mud_Mortar","Load_Bearing_Stone_Wall_in_Cement_Mortar","Load_Bearing_Stone_Wall_in_Mud_Mortar","Adobe","Mixed"]},
-					{key:"earthquake_resistant_element",alias:"Earthquake Resistant Elements",value:["N/A","Yes","No","Partial"]}			
-					];*/
-		
+	}		
 		var field = [
 					{key:"building",alias:"Building",value:["N/A","kindergarten","school","college","university","hospital","clinic","nursing_home","health_post"]},
 					
@@ -691,7 +656,11 @@
         	building_url = "http://overpass-api.de/api/interpreter?data=(  (    node(bbox)['name'~'kindergarten$|school$|college$|hospital$|clinic$|health'];  );  (    node(bbox)['building'~'kindergarten|school|college|government|hospital|clinic|health$'];  );  (    node(bbox)['amenity'~'kindergarten|school|college|public_building|hospital|clinic|health'];  );  (    node(bbox)['office'~'government'];  );  (    way(bbox)['name'~'kindergarten$|school$|college$|hospital$|clinic$|health$'][building];    node(w);  );    (    way(bbox)['building'~'kindergarten|school|college|government|hospital|clinic|health_post|dentist'];    node(w);  );  (    way(bbox)['amenity'~'school|college|public_building|hospital|clinic|health_post'];    node(w);  );  ) ->.a;(way(around .a : 1)[building];node(w);); out meta qt;";
 		
 		building = new OpenLayers.Layer.Vector("Building", {
-			strategies: [new OpenLayers.Strategy.BBOX({ratio:1.0}),new OpenLayers.Strategy.Refresh()],
+			strategies: [
+				new ZoomLimitedBBOXStrategy(16),
+				// new OpenLayers.Strategy.BBOX({ratio:1.0}),
+				new OpenLayers.Strategy.Refresh()
+			],
 			protocol: new OpenLayers.Protocol.HTTP({
 				url: building_url,   //<-- relative or absolute URL to your .osm file
 				format: new OpenLayers.Format.OSMMeta()
@@ -701,7 +670,11 @@
 		});
 		
 		facility = new OpenLayers.Layer.Vector("Facility", {
-			strategies: [new OpenLayers.Strategy.BBOX({ratio:1.0}),new OpenLayers.Strategy.Refresh()],
+			strategies: [
+				new ZoomLimitedBBOXStrategy(16),
+				// new OpenLayers.Strategy.BBOX({ratio:1.0}),
+				new OpenLayers.Strategy.Refresh()
+			],
 			protocol: new OpenLayers.Protocol.HTTP({
 				url: facility_url,   //<-- relative or absolute URL to your .osm file
 				format: new OpenLayers.Format.OSMMeta()
@@ -709,7 +682,7 @@
 			projection: new OpenLayers.Projection("EPSG:4326")
 		});
 
-		map.addLayers([building,facility]);
+		map.addLayer(facility);
 		
 		/*map.events.on({
 			"zoomend":function(e){
